@@ -19,22 +19,34 @@
             display: inline-block;
             background-color: yellow;
         }
+        #header {
+            text-align: left;
+        }
+        #header-hamburger {
+            margin-top: 18px;
+            padding: 10px;
+            display: inline-block;
+        }
+        #header-hamburger > div {
+            background-image: url(./sp_main.04eb92b7.png);
+            width: 26px;
+            height: 26px;
+            background-repeat: no-repeat;
+            background-size: 422px 405px; /* 영상 기준으로 작성하였습니다. */
+            background-position: -335px -284px;
+        }
         #main {
             height: 2000px;
         }
-        #hamburger {
-            margin-top: 18px;
-            background-color: blue;
-            width: 46px;
-            height: 46px;
-        }
+
     </style>
 </head>
 <body>
     <div id="wrap">
         <div id="wrap-center">
             <div id="header">
-                <div id="hamburger">
+                <div id="header-hamburger">
+                    <div></div>
                 </div>
             </div>
             <div id="search"></div>
