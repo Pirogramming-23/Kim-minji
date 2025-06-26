@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GitHub – Built for developers</title>
+  <link rel="icon" type="image/png" href="./github-image.png"/>
+
+  <style>
+    /* 0. 기본 리셋 */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: rgb(34, 40, 48, 0.9);
+      color: #c9d1d9;
+      line-height: 1.5;
+    }
+
+    /* 1. 공통 컨테이너 중앙 정렬 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    /* 2. 헤더 (Navbar) */
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+    }
+    .github-logo img {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+    .navbar-nav ul {
+      display: grid;
+      grid-auto-flow: column;      /* 열 방향으로 배치 */
+      column-gap: 1.5rem;          /* flex의 gap 역할 */
+      align-items: center;    /* 수직 가운데 정렬 */
+    }
+    .navbar-nav a {
+      color: inherit;
+      font-size: 0.94rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .dropdown {
+      margin-left: 0.25em;
+      font-size: 0.8em;
+      vertical-align: middle;
+    }
+    .navbar-left {
+        display: flex;
+        align-items: center;    /* 자식(로고, nav)을 수직 가운데 정렬 */
+        gap: 2rem;              /* 로고와 메뉴 사이에 여백 */
+    }
+    .header-hero-wrapper {
+        padding: 0 4rem;      /* 좌우 여백 */
+    }
+
+    /* 3. 우측 검색 + Sign in/Sign up */
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .search-box {
+      display: inline-flex;
+      align-items: center;
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 0.25rem 0.5rem;
+    }
+    .search-box input {
+      background: transparent;
+      border: none;
+      color: inherit;
+      width: 120px;
+      font-size: 0.875rem;
+    }
+    .search-slash {
+      margin-left: 0.5rem;
+      font-size: 0.75rem;
+      color: #8b949e;
+    }
+    /* Sign in 색상을 파란 계열로 지정 */
+    .sign-in {
+      font-size: 0.94rem;
+      color: white;
+      text-decoration: none;
+    }
+    .sign-in:hover {
+      color: #ffffff;
+    }
+    .sign-up {
+      font-size: 0.94rem;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid currentColor;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    /* 4. 메인 컨텐츠 */
+    .main-content {
+      flex: 1;               /* 남은 높이를 메인이 채우도록 */
+      display: flex;
+      gap: 2rem;
+      padding: 1rem 0;
+    }
+    .hero-text {
+      flex: 1;
+      padding-top: 8rem;
+      padding-left: 15rem;
+    }
+    .hero-text h1 {
+      font-size: 3rem;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero-text p {
+      color: #8b949e;
+      max-width: 500px;
+    }
+    .main-right {
+        flex: 0 0 360px;
+        padding-right: 1rem;    
+    }
+    .highlight {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* 5. 회원가입 폼 */
+    .main-right {
+      flex: 0 0 360px;
+      padding-right: 30rem;
+    }
+    .signup-form {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      color: #24292e;
+      width: 300%;   
+      box-sizing: border-box;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      font-size: 0.94rem;
+    }
+    .btn-primary {
+      width: 100%;
+      margin: 1.5rem 0;
+      padding: 0.75rem;
+      background: #2ea44f;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .terms-text {
+      font-size: 0.875rem;
+      color: #57606a;
+    }
+    .terms-text a {
+      color: #0969da;
+      text-decoration: none;
+    }
+
+    /* 6. 푸터 */
+    /* 1) 부모 푸터가 넘치는 자식을 보여주도록 */
+    .footer {
+        position: relative;
+        overflow: visible; /* 이미지가 넘어와도 보이게 */
+        text-align: right;
+        background: #f6f8fa;
+    }
+
+    /* 2) 이미지 자체를 위로 끌어올리기 */
+    .footer-img {
+        display: inline-block;
+        max-width: 35%;    /* 원하시는 크기로 */
+        height: auto;
+        margin-top: -40px; /* 위로 얼마나 넘칠지 */
+        padding-right: 5rem; /* 오른쪽 여백 */
+    }
+
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <!-- 왼쪽: 로고 + 내비게이션 -->
+      <div class="navbar-left">
+        <a href="/" class="github-logo">
+          <img src="./github-image.png" alt="GitHub Logo" />
+        </a>
+        <nav class="navbar-nav">
+          <ul>
+            <li><a href="#">Why GitHub? <span class="dropdown">▿</span></a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Enterprise</a></li>
+            <li><a href="#">Explore <span class="dropdown">▿</span></a></li>
+            <li><a href="#">Marketplace</a></li>
+            <li><a href="#">Pricing <span class="dropdown">▿</span></a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- 오른쪽: 검색 + Sign in/Sign up -->
+      <div class="navbar-right">
+        <div class="search-box">
+          <input type="text" placeholder="Search GitHub" />
+          <span class="search-slash">/</span>
+        </div>
+        <a href="#" class="sign-in">Sign in</a>
+        <a href="#" class="sign-up">Sign up</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- 히어로 텍스트 -->
+    <div class="container hero-text">
+      <h1>Built for <br> developers</h1>
+      <p>
+        GitHub is a development platform inspired by the <br> way you work.
+        From <span class="highlight">open source</span> to
+        <span class="highlight">business</span>, you <br>  can host and review code,
+        manage projects, and <br> build software alongside 50 million developers.
+      </p>
+    </div>
+
+    <!-- 회원가입 폼 -->
+    <div class="main-right">
+      <div class="signup-form">
+        <form>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" />
+            <small>
+              Make sure it’s at least 15 characters OR at least 8 characters
+              including a number and a lowercase letter.
+              <a href="#">Learn more.</a>
+            </small>
+          </div>
+          <button type="submit" class="btn-primary">Sign up for GitHub</button>
+          <p class="terms-text">
+            By clicking “Sign up for GitHub”, you agree to our
+            <a href="#">Terms of Service</a> and
+            <a href="#">Privacy Statement</a>. We’ll occasionally send you
+            account related emails.
+          </p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <!-- 푸터 이미지 (오른쪽 정렬) -->
+    <img src="./github-footer.webp" alt="GitHub Footer Graphic" class="footer-img" />
+  </footer>
+</body>
+</html> 
