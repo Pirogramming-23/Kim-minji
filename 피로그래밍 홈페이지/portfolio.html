@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="./logo.png" />
+  <title>피로그래밍</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #000;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 0 2rem 2rem;
+    }
+    .navbar {
+      position: sticky;          
+      top: 0;                     
+      z-index: 1000;              
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 0;
+      max-width: 1100px;
+      margin: 0 auto;
+        background: linear-gradient(to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.85) 40%,
+        rgba(0, 0, 0, 0.5) 80%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+
+    @media (min-width: 1024px) {
+      .navbar {
+        padding: 1.2rem 1vw;
+      }
+    }
+
+    .logo {
+      height: 43px;
+    }
+
+    /* 화면이 작아졌을 때 (태블릿 이하) */
+    @media (max-width: 1024px) {
+      .logo {
+        height: 40px;
+      }
+    }
+
+    /* 모바일 화면일 때 */
+    @media (max-width: 600px) {
+      .logo {
+        height: 33px;
+      }
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 2rem;
+      padding: 0;
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    .nav-center a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .nav-center a:hover {
+      transform: translateY(-2px);               
+    }
+
+    .nav-bottom {
+      position: relative;
+      height: 2rem;
+      margin: 1rem 0;
+      overflow: visible;
+      max-width: 1100px;
+      margin: 1rem auto;
+    }
+
+    .nav-bottom .generation {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5rem;
+    
+    }
+
+    .nav-bottom .nav-link {
+      position: absolute;
+      right: 0;
+      font-size: 1rem;
+    }
+
+    .hamburger-icon {
+      margin-left: auto;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .nav-center {
+        display: none;
+      }
+
+      .hamburger-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .hamburger-icon div {
+        width: 100%;
+        height: 2px;
+        background-color: white;
+      }
+
+      .navbar {
+        justify-content: space-between;
+      }
+    }
+
+    .grid-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 0;
+      width: 100%; 
+      align-items: center;           
+    }
+
+    .card {
+      display: flex;
+      align-items: center;
+      background: #2c2c2c;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+      position: relative;
+      gap: 1rem;
+      width: 100%;          
+      max-width: 1100px;     
+      margin: 0 auto;        
+    }
+
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card-image {
+      width: 180px;
+      height: 150px;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      margin-left: 1rem;
+    }
+
+    .image-wrapper {
+      background-color: white;
+      border-radius: 6px;
+      width: 150px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+    }
+
+    .image-wrapper img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 90%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .card:hover .card-image img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 1rem 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .card-content {
+        padding: 0.8rem;
+      }
+      .card-image {
+        width: 150px;
+        height: 120px;
+      }
+    }
+
+    @media (max-width: 600px) {
+    .card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 95%;
+      padding: 0.8rem;
+      gap: 0.5rem;
+    }
+
+    .card-image {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      padding: 1rem 0;
+    }
+
+    .image-wrapper {
+      width: 100%;
+      max-width: 220px;
+      height: 150px;   
+      padding: 0.3rem;
+    }
+
+    .card-content {
+      padding: 0.5rem 0.8rem;
+    }
+
+    .team {
+      margin-top: 4%;
+      gap: 0.2rem;
+    }
+
+    .team span {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+    }
+  }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 7vw;
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 0.1vw;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 0;
+      }
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      
+      margin-bottom: 0.5rem;
+    }
+    .card-description {
+      font-size: 1rem;
+      color: #ccc;
+      margin: 2% 0 0.5rem;
+    }
+
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 10%;
+    }
+
+    .team span {
+      background: #444;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+    }
+
+    .team span.highlight {
+      background: #367698;
+      color: white;
+    }
+
+    .hamburger {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: default;
+    }
+
+    .hamburger div {
+      width: 20px;
+      height: 3px;
+      background: white;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .hamburger div:nth-child(1) { transform: scaleX(0.6); }
+    .card:hover .hamburger div:nth-child(2) { transform: scaleX(1.2); }
+    .card:hover .hamburger div:nth-child(3) { transform: scaleX(0.8); }
+
+    .footer {
+      background: #333333;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      text-align: center;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+    }
+
+    .footer-links {
+      flex: 1;
+      min-width: 200px;
+      text-align: right;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 0.3rem;
+      font-weight: 300;
+      font-size: 1.1rem;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      align-items: center;
+    }
+
+    .footer-icons img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .footer-title {
+      display: flex;
+      margin-bottom: 0.5rem;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .footer-email {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: flex-start;
+    }
+
+    .email-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .footer-bottom {
+      font-size: 0.8rem;
+      color: #aaa;
+      background-color: #222222;
+      padding: 1rem 0;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .footer-info,
+      .footer-links {
+        text-align: center;
+        justify-content: center;
+      }
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 0.3rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+    <img src="./piro_logo.svg" alt="로고" class="logo" />
+
+    <div class="nav-center">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Interview</a>
+        <a href="#">Gallery</a>
+        <a href="#">Recruit</a>
+    </div>
+    <div class="hamburger-icon">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    </div>
+
+
+    <div class="nav-bottom">
+    <span class="generation">22기</span>
+    <span class="nav-link">21기 &gt;</span>
+        <div></div>
+    </div>
+ 
+
+  <!-- 카드 리스트 -->
+  <div class="grid-container">
+    <!-- 카드들 반복 -->
+    <div class="card">
+      <div class="card-image">
+        <div class="image-wrapper">
+        <img src="./piro_codynow.png" alt="Codynow 이미지">
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-title">Codynow</div>
+        <div class="card-description">스타일에 대한 고민을 덜어주는 AI 코디네이터, Codynow</div>
+        <div class="team">
+          <span class="highlight">홍다오</span><span>박서정</span><span>최준혁</span><span>김예원</span><span>김은경</span>
+        </div>
+      </div>
+      <div class="hamburger"><div></div><div></div><div></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <div class="image-wrapper">
+        <img src="./piro_걸음걸이.png" alt="걸음걸이">
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-title">걸음걸이</div>
+        <div class="card-description">멈추지 않을 당신의 걸음을 위한 맞춤형 서비스</div>
+        <div class="team">
+          <span class="highlight">남경민</span><span>김규일</span><span>김선주</span><span>박건욱</span><span>이주원</span>
+        </div>
+      </div>
+      <div class="hamburger"><div></div><div></div><div></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <div class="image-wrapper">
+        <img src="./piro_지성park.png" alt="지성Park">
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-title">지성Park</div>
+        <div class="card-description">지성있는 운전자들을 위한 실시간 주차장 정보 제공 서비스</div>
+        <div class="team">
+          <span class="highlight">정원준</span><span>김현진</span><span>임유지</span><span>김태린</span><span>박태희</span>
+        </div>
+      </div>
+      <div class="hamburger"><div></div><div></div><div></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <div class="image-wrapper">
+        <img src="./piro_Urabi.png" alt="Urabi">
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-title">Urabi</div>
+        <div class="card-description">사용자가 원하는 대로, 유럽 여행 동행 매칭 & 커뮤니티 서비스</div>
+        <div class="team">
+          <span class="highlight">민설아</span><span>유승민</span><span>최민석</span><span>김재원</span><span>이시은</span>
+        </div>
+      </div>
+      <div class="hamburger"><div></div><div></div><div></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <div class="image-wrapper">
+        <img src="./piro_Pictory.png" alt="Pictory">
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-title">Pictory</div>
+        <div class="card-description">인생네컷으로 만드는 나만의 일기장</div>
+        <div class="team">
+          <span class="highlight">박수연</span><span>김은성</span><span>임진수</span><span>김수연</span>
+        </div>
+      </div>
+      <div class="hamburger"><div></div><div></div><div></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <div class="image-wrapper">
+        <img src="./piro_온기록.png" alt="온기록">
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-title">온기록</div>
+        <div class="card-description">함께한 순간을 기록하면 AI를 통해 반려친구의 마음을 전해주는 기록 서비스</div>
+        <div class="team">
+          <span class="highlight">박혜린</span><span>김영호</span><span>장재훈</span><span>한종서</span><span>조주영</span>
+        </div>
+      </div>
+      <div class="hamburger"><div></div><div></div><div></div></div>
+    </div>
+  </div>
+</div>
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- 왼쪽: 회칙 + 아이콘 + 이메일 -->
+      <div class="footer-info">
+        <div class="footer-title">PIROGRAMMING 회칙 ></div>
+        <div class="footer-icons">
+          <img src="./piro_kakao.svg" alt="Talk Icon">
+          <img src="./piro_github.svg" alt="GitHub Icon">
+          <img src="./piro_instagram.svg" alt="Instagram Icon">
+        </div>
+        <div class="footer-email">
+        <img src="./piro_gmail.svg" alt="이메일 아이콘" class="email-icon" />
+        pirogramming.official@gmail.com
+     </div>
+    </div>
+
+      <!-- 오른쪽: 메뉴 링크들 -->
+      <div class="footer-links">
+        <a href="#">Home</a> |
+        <a href="#">About Us</a> |
+        <a href="#">Portfolio</a> |
+        <a href="#">Interview</a> |
+        <a href="#">Gallery</a> |
+        <a href="#">Recruit</a>
+      </div>
+    </div>
+
+  </footer>
+    <div class="footer-bottom">
+      © Pirogramming. 2023 All rights reserved.
+    </div>
+
+</body>
+</html>
