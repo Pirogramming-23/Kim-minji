@@ -68,10 +68,16 @@ function check_numbers() {
   // 숫자형으로 변환 및 중복 검사
   const guess = inputs.map(Number);
   const uniqueGuess = new Set(guess);
-  if (uniqueGuess.size !== 3) {
-    alert("중복되지 않는 숫자 3개를 입력하세요.");
-    return;
-  }
+if (uniqueGuess.size !== 3) {
+  alert("중복되지 않는 숫자 3개를 입력하세요.");
+
+  // 입력창 초기화 추가
+  document.getElementById("number1").value = "";
+  document.getElementById("number2").value = "";
+  document.getElementById("number3").value = "";
+
+  return;
+}
 
   // 스트라이크/볼 계산
   let strike = 0, ball = 0;
