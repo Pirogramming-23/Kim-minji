@@ -1,0 +1,88 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.stopwatch-container {
+  background-color: #c6d1c4;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.time-display {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  font-size: 3rem;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.buttons button {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 50%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  transition: background 0.2s;
+}
+
+.buttons button:hover {
+  background-color: #e0e0e0;
+}
+
+.lap-container {
+  margin-top: 2rem;
+  background-color: #c6d1c4;
+  width: 60%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.lap-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+.lap-label {
+  font-size: 1rem;
+  font-weight: 500;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.trash-icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
