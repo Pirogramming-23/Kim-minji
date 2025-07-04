@@ -78,11 +78,82 @@ body {
 .lap-label {
   font-size: 1rem;
   font-weight: 500;
-  flex-grow: 1;
-  text-align: center;
 }
 
 .trash-icon {
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+#lap-records {
+  margin-top: 1rem;
+  width: 60%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* lap-record: 줄 정렬 */
+.lap-record {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.2rem;
+}
+
+/* label 안 체크박스 감싸기 */
+.circle-checkbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+/* 실제 체크박스 숨김 처리 */
+.circle-checkbox input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 동그란 박스처럼 보일 부분 */
+.circle-mark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  border-radius: 50%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.lap-time {
+  font-family: monospace;
+  margin-left: 8.5rem;
+}
+
+.circle-checkbox input[type="checkbox"]:checked + .circle-mark::before {
+  content: '✓';
+  color: black;
+  font-size: 14px;
+  position: absolute;
+  font-weight: bold;
+  top: 0;
+  left: 4px;
+}
+
+.lap-header {
+  margin-top: 2rem;
+  background-color: #c6d1c4;
+  width: 60%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.08);
 }
