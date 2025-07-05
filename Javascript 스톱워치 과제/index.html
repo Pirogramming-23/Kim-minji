@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>피로그래밍 스톱워치</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h1 class="title">⏱ 피로그래밍 스톱워치</h1>
+
+  <div class="stopwatch-container">
+    <div class="time-display" id="time">00:00</div>
+    <div class="buttons">
+      <button id="start">start</button>
+      <button id="stop">stop</button>
+      <button id="reset">reset</button>
+    </div>
+  </div>
+
+    <div class="lap-header">
+    <label class="circle-checkbox">
+        <input type="checkbox" id="select-all" />
+        <span class="circle-mark"></span>
+    </label>
+    <span class="lap-label">구간 기록</span>
+    <span class="trash-icon" id="delete-selected">🗑️</span>
+    </div>
+
+    <div class="timer-input-container">
+    <label for="timer-input">타이머 (초): </label>
+    <input type="number" id="timer-input" min="1" placeholder="초 입력" />
+    </div>
+    
+    <div id="lap-records"></div>
+
+</body>
+</html>
