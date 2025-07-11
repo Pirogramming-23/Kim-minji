@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Review
 from .forms import ReviewForm
+from django.views.decorators.http import require_POST
 
 def review_list(request):
     order = request.GET.get('order', 'title')  # 기본 정렬: 제목
@@ -40,6 +41,7 @@ def review_edit(request, pk):
         form = ReviewForm(instance=review)
     return render(request, 'reviews/review_form.html', {'form': form})
 
+@require_POST
 def review_delete(request, pk):
     review = get_object_or_404(Review, pk=pk)
     review.delete()

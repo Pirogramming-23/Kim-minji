@@ -10,7 +10,11 @@
 <body class="bg-light">
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="fw-bold">my <span class="text-danger">Movie</span> reviews</h1>
+            <h1 class="fw-bold">
+                <a href="{% url 'review_list' %}" class="text-decoration-none text-dark">
+                    my <span class="text-danger">Movie</span> reviews
+                </a>
+            </h1>
             <a class="btn btn-outline-primary" href="{% url 'review_create' %}">Add a New review</a>
         </div>
 
