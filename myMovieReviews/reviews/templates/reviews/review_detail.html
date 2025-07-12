@@ -1,0 +1,58 @@
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ review.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold">
+        <a href="{% url 'review_list' %}" class="text-decoration-none text-dark">
+            my <span class="text-danger">Movie</span> reviews
+        </a>
+    </h1>
+    <a class="btn btn-outline-primary" href="{% url 'review_create' %}">Add a New review</a>
+</div>
+
+        <!-- 영화 제목 & 수정/삭제 버튼 -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="fw-bold">{{ review.title }}</h2>
+            <div>
+                <a class="btn btn-sm btn-outline-secondary me-2" href="{% url 'review_edit' review.pk %}">수정</a>
+                <form action="{% url 'review_delete' review.pk %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 리뷰 카드 -->
+        <div class="card p-4 mb-4 shadow-sm">
+            <div class="row">
+                {% if review.poster_url %}
+                <div class="col-md-4">
+                    <img src="{{ review.poster_url }}" class="img-fluid rounded mb-3 mb-md-0" alt="{{ review.title }}">
+                </div>
+                {% endif %}
+                <div class="col">
+                    <p><strong>개봉년도:</strong> {{ review.release_year }}년</p>
+                    <p><strong>감독:</strong> {{ review.director }}</p>
+                    <p><strong>주연:</strong> {{ review.cast }}</p>
+                    <p><strong>장르:</strong> {{ review.genre }}</p>
+                    <p><strong>별점:</strong> {{ review.rating }}</p>
+                    <p><strong>러닝타임:</strong> {{ review.runtime|hours_minutes }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 리뷰 내용 -->
+        <div class="card p-4 shadow-sm">
+            <p>{{ review.content }}</p>
+        </div>
+    </div>
+</body>
+</html>
