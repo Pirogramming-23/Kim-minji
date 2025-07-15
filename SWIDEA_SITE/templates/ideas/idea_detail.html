@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 20px;">
+    <h2 style="color: #ADFF2F; font-weight: bold;">Idea Detail</h2>
+    <p>아이디어 세부내용 페이지입니다.</p>
+</div>
+<h2>{{ idea.title }}</h2>
+<img src="{{ idea.image.url }}" class="img-fluid mb-3" alt="{{ idea.title }}">
+<p>{{ idea.content }}</p>
+<p>관심도: {{ idea.interest }}</p>
+<p>개발툴: <a href="{% url 'devtools:devtool_detail' idea.devtool.pk %}">{{ idea.devtool.name }}</a></p>
+
+<button class="btn btn-sm btn-outline-warning star-btn" data-id="{{ idea.pk }}">
+    {% if idea.is_starred %}
+        <i class="fas fa-star"></i> 찜취소
+    {% else %}
+        <i class="far fa-star"></i> 찜하기 
+    {% endif %}
+</button>
+
+<p></p>
+
+<a href="{% url 'ideas:idea_edit' idea.pk %}" class="btn btn-primary">수정</a>
+<a href="{% url 'ideas:idea_delete' idea.pk %}" class="btn btn-danger">삭제</a>
+<a href="{% url 'ideas:idea_list' %}" class="btn btn-secondary">목록</a>
+{% endblock %}
+
+<script>
+$(document).ready(function() {
+    $('.star-btn').click(function() {
+        const ideaId = $(this).data('id');
+        const $btn = $(this);
+        const $count = $('.star-count');
+
+        $.ajax({
+            url: `/${ideaId}/star/`,
+            type: 'POST',
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            success: function(response) {
+                if (response.is_starred) {
+                    $btn.html('<i class="fas fa-star"></i> 찜취소');
+                } else {
+                    $btn.html('<i class="far fa-star"></i> 찜하기');
+                }
+            }
+        });
+    });
+});
+</script>

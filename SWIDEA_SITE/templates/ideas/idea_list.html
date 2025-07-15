@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 20px;">
+    <h2 style="color: #ADFF2F; font-weight: bold;">Idea List</h2>
+    <p>너의 아이디어를 멋지게 관리해보세요</p>
+</div>
+
+<div style="text-align: right; margin-bottom: 20px;">
+    <form method="get">
+        <select name="order" onchange="this.form.submit()" style="padding: 5px;">
+            <option value="">--정렬기준--</option>
+            <option value="like" {% if request.GET.order == 'like' %}selected{% endif %}>찜하기순</option>
+            <option value="interest" {% if request.GET.order == 'interest' %}selected{% endif %}>관심도순</option>
+            <option value="latest" {% if request.GET.order == 'latest' %}selected{% endif %}>최신순</option>
+            <option value="name" {% if request.GET.order == 'name' %}selected{% endif %}>이름순</option>
+        </select>
+    </form>
+</div>
+
+<div class="row">
+    {% for idea in page_obj %}
+    <div class="col-md-3 mb-4">
+        <div class="card text-center" style="background-color: #f0f0f0; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);">
+            <img src="{{ idea.image.url }}" class="card-img-top" alt="{{ idea.title }}" style="height: 150px; object-fit: contain;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'ideas:idea_detail' idea.pk %}" style="text-decoration: none; color: black;">
+                        {{ idea.title }}
+                    </a>
+                </h5>
+                <p>예상 개발 툴: {{ idea.devtool.name }}</p>
+                <p>아이디어 관심도: 
+                    <button class="btn btn-sm btn-outline-secondary interest-btn" data-id="{{ idea.pk }}" data-action="minus">-</button>
+                    {{ idea.interest }}
+                    <button class="btn btn-sm btn-outline-secondary interest-btn" data-id="{{ idea.pk }}" data-action="plus">+</button>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if order %}&order={{ order }}{% endif %}">◀ 이전</a>
+    {% endif %}
+
+    <span>페이지 {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if order %}&order={{ order }}{% endif %}">다음 ▶</a>
+    {% endif %}
+</div>
+{% endblock %}
