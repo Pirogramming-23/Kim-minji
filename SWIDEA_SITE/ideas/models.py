@@ -9,6 +9,8 @@ class Idea(models.Model):
     interest = models.IntegerField(default=0)
     devtool = models.ForeignKey(DevTool, on_delete=models.CASCADE, related_name='ideas')
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.title
