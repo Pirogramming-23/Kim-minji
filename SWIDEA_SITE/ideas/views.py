@@ -134,5 +134,3 @@ def ajax_search(request):
         ideas.append(idea)
 
     return JsonResponse({'ideas': ideas})
-
-

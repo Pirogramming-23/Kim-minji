@@ -21,9 +21,9 @@
 
 <p></p>
 
-<a href="{% url 'ideas:idea_edit' idea.pk %}" class="btn btn-primary">수정</a>
 <a href="{% url 'ideas:idea_delete' idea.pk %}" class="btn btn-danger">삭제</a>
 <a href="{% url 'ideas:idea_list' %}" class="btn btn-secondary">목록</a>
+<a href="{% url 'ideas:idea_edit' idea.pk %}" class="btn btn-primary">수정</a>
 {% endblock %}
 
 <script>
