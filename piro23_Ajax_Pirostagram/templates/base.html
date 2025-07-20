@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Pirostagram</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/ajax.js' %}" defer></script>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <!-- 네비게이션 -->
+            <nav class="level">
+                <div class="level-left">
+                    <h1 class="title"><a href="/">📸 Pirostagram</a></h1>
+                </div>
+                <div class="level-right">
+                    {% if user.is_authenticated %}
+                        <span>안녕하세요, {{ user.username }}님!</span>
+                        <a class="button is-light" href="{% url 'logout' %}">로그아웃</a>
+                    {% else %}
+                        <a class="button is-link" href="{% url 'login' %}">로그인</a>
+                        <a class="button is-primary" href="{% url 'users:signup' %}">회원가입</a>
+                    {% endif %}
+                </div>
+            </nav>
+
+            <!-- 본문 -->
+            {% block content %}
+            {% endblock %}
+        </div>
+    </section>
+</body>
+</html>

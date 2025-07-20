@@ -1,0 +1,45 @@
+body {
+    background-color: #fafafa;
+    font-family: 'Arial', sans-serif;
+}
+
+h1.title a {
+    text-decoration: none;
+    color: #262626;
+}
+
+.post {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.post img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    color: #ed4956;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.add-comment-form input[type="text"] {
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 5px;
+}
+
+.add-comment-form button {
+    border: none;
+    background-color: transparent;
+    color: #3897f0;
+    font-weight: bold;
+    cursor: pointer;
+}
