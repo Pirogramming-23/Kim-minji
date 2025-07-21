@@ -9,11 +9,12 @@ def post_list(request):
     return render(request, 'posts/post_list.html', {'posts': posts})
 
 
-# 좋아요 토글 (Ajax)
 @login_required
 def like_post(request):
     if request.method == 'POST':
         post_id = request.POST.get('post_id')
+        if not post_id or not post_id.isdigit():
+            return JsonResponse({'error': 'Invalid post_id'}, status=400)
         post = get_object_or_404(Post, id=post_id)
         like, created = Like.objects.get_or_create(post=post, user=request.user)
 
@@ -28,13 +29,13 @@ def like_post(request):
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
-
-# 댓글 작성 (Ajax)
 @login_required
 def add_comment(request):
     if request.method == 'POST':
         post_id = request.POST.get('post_id')
         content = request.POST.get('content')
+        if not post_id or not post_id.isdigit() or not content.strip():
+            return JsonResponse({'error': 'Invalid data'}, status=400)
         post = get_object_or_404(Post, id=post_id)
 
         comment = Comment.objects.create(post=post, user=request.user, content=content)
@@ -69,7 +70,7 @@ def post_create(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.user = request.user
+            post.user = request.user 
             post.save()
             return redirect('posts:post_list')
     else:

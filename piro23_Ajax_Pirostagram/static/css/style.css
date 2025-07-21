@@ -1,45 +1,66 @@
 body {
     background-color: #fafafa;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.post {
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.post img {
+    width: 100%;
+}
+
+.post-actions i {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.post-actions i:hover {
+    transform: scale(1.2);
+}
+
+.post-comments div {
+    margin: 2px 0;
+}
+
+.comment {
+    margin: 3px 0;
+}
+
+.add-comment-form input {
+    border: none;
+    width: 100%;
+    padding: 5px;
+}
+
+.add-comment-form button {
+    background: none;
+    border: none;
+    color: #3897f0;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 
 h1.title a {
     text-decoration: none;
     color: #262626;
-}
-
-.post {
-    background-color: white;
-    border: 1px solid #dbdbdb;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 30px;
-}
-
-.post img {
-    max-width: 100%;
-    border-radius: 5px;
+    font-size: 1.8rem;
 }
 
 .like-btn {
     background: none;
     border: none;
     color: #ed4956;
-    font-size: 20px;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
-.add-comment-form input[type="text"] {
-    width: 80%;
-    border: none;
-    border-bottom: 1px solid #dbdbdb;
-    padding: 5px;
-}
-
-.add-comment-form button {
-    border: none;
-    background-color: transparent;
-    color: #3897f0;
-    font-weight: bold;
-    cursor: pointer;
+.comments {
+    padding: 0 10px;
 }
