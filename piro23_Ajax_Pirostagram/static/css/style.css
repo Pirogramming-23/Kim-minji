@@ -64,3 +64,18 @@ h1.title a {
 .comments {
     padding: 0 10px;
 }
+
+.post-slider img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post-slider button {
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}

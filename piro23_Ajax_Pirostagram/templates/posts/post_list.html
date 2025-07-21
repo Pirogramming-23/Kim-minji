@@ -2,6 +2,18 @@
 {% load static %}
 {% block content %}
 
+<div style="text-align: right; margin-bottom: 20px;">
+    <a href="{% url 'posts:post_create' %}" class="button is-primary">
+        +
+    </a>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <a href="?sort=latest" class="button is-small">최신순</a>
+    <a href="?sort=likes" class="button is-small">좋아요순</a>
+    <a href="?sort=comments" class="button is-small">댓글많은순</a>
+</div>
+
 <div id="post-list">
     {% for post in posts %}
     <div class="post" data-post-id="{{ post.id }}" style="border:1px solid #dbdbdb; background:#fff; margin-bottom:20px; border-radius:5px;">
@@ -12,8 +24,22 @@
             <strong>{{ post.user.username }}</strong>
         </div>
 
-        <!-- 게시물 이미지 -->
-        <img src="{{ post.image.url }}" alt="post image" style="width:100%;">
+        <!-- 게시물 이미지 (여기를 교체!) -->
+        <div class="post-slider" style="position: relative; overflow: hidden;">
+            <div class="slider-track" style="display: flex; transition: transform 0.3s;">
+                {% if post.images.exists %}
+                    {% for image in post.images.all %}
+                    <img src="{{ image.image.url }}" style="min-width: 100%; object-fit: cover;">
+                    {% endfor %}
+                {% elif post.image %}
+                    <img src="{{ post.image.url }}" style="min-width: 100%; object-fit: cover;">
+                {% endif %}
+            </div>
+            {% if post.images.count > 1 %}
+            <button class="prev-btn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 24px;">‹</button>
+            <button class="next-btn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 24px;">›</button>
+            {% endif %}
+        </div>
 
         <!-- 좋아요 & 댓글 아이콘 -->
         <div class="post-actions" style="padding:10px; font-size:1.5rem;">
@@ -55,3 +81,30 @@
 </div>
 
 {% endblock %}
+
+<script>
+document.querySelectorAll('.post').forEach(post => {
+    const track = post.querySelector('.slider-track');
+    const images = post.querySelectorAll('.slider-track img');
+    const prevBtn = post.querySelector('.prev-btn');
+    const nextBtn = post.querySelector('.next-btn');
+
+    if (!track || images.length <= 1) return; // 이미지 1개 이하면 skip
+
+    let currentIndex = 0;
+
+    const updateSlider = () => {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    };
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateSlider();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlider();
+    });
+});
+</script>

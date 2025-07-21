@@ -1,13 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Post, Comment, Like
+from .models import Post, Comment, Like, PostImage
 
 # 피드(게시물 리스트)
 def post_list(request):
-    posts = Post.objects.all().order_by('-created_at')
-    return render(request, 'posts/post_list.html', {'posts': posts})
+    sort = request.GET.get('sort', 'latest')  # 기본은 latest
+    posts = Post.objects.all()
 
+    if sort == 'latest':
+        posts = posts.order_by('-created_at')
+    elif sort == 'likes':
+        posts = sorted(posts, key=lambda p: p.likes.count(), reverse=True)
+    elif sort == 'comments':
+        posts = sorted(posts, key=lambda p: p.comments.count(), reverse=True)
+
+    return render(request, 'posts/post_list.html', {'posts': posts})
 
 @login_required
 def like_post(request):
@@ -68,10 +76,13 @@ from .forms import PostForm
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
+        images = request.FILES.getlist('images')
         if form.is_valid():
             post = form.save(commit=False)
-            post.user = request.user 
+            post.user = request.user
             post.save()
+            for img in images:
+                PostImage.objects.create(post=post, image=img)
             return redirect('posts:post_list')
     else:
         form = PostForm()

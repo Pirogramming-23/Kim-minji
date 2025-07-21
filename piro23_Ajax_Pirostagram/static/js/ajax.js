@@ -95,3 +95,23 @@ document.getElementById('post-list').addEventListener('click', function(e) {
         .catch(err => console.error('Delete comment error:', err));
     }
 });
+
+document.querySelectorAll('.post-slider').forEach(slider => {
+    const track = slider.querySelector('.slider-track');
+    const images = track.querySelectorAll('img');
+    let currentIndex = 0;
+
+    const updateSlider = () => {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    };
+
+    slider.querySelector('.prev-btn')?.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateSlider();
+    });
+
+    slider.querySelector('.next-btn')?.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlider();
+    });
+});

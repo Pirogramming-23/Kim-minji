@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>게시물 업로드</h2>
+<h2 class="title">게시물 작성하기</h2>
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">업로드</button>
+    <p>
+        <label for="id_title">제목:</label>
+        {{ form.title }}
+    </p>
+    <p>
+        <label for="id_content">내용:</label>
+        {{ form.content }}
+    </p>
+    <p>
+        <label for="id_images">사진 선택:</label>
+        <input type="file" name="images" multiple>
+    </p>
+    <button type="submit" class="button is-primary">업로드</button>
 </form>
 {% endblock %}
