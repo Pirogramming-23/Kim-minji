@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div style="text-align: right; margin-bottom: 20px;">
+    <a href="{% url 'posts:post_create' %}" class="button is-primary">
+        +
+    </a>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <a href="?sort=latest" class="button is-small">최신순</a>
+    <a href="?sort=likes" class="button is-small">좋아요순</a>
+    <a href="?sort=comments" class="button is-small">댓글많은순</a>
+</div>
+
+<div id="post-list">
+    {% for post in posts %}
+    <div class="post" data-post-id="{{ post.id }}" style="border:1px solid #dbdbdb; background:#fff; margin-bottom:20px; border-radius:5px;">
+        
+        <!-- 상단 프로필 + 유저 이름 -->
+        <div style="display:flex; align-items:center; padding:10px;">
+            <img src="{% static 'img/default_profile.png' %}" alt="프로필" style="width:32px; height:32px; border-radius:50%; margin-right:10px;">
+            <strong>{{ post.user.username }}</strong>
+        </div>
+
+        <!-- 게시물 이미지 (여기를 교체!) -->
+        <div class="post-slider" style="position: relative; overflow: hidden;">
+            <div class="slider-track" style="display: flex; transition: transform 0.3s;">
+                {% if post.images.exists %}
+                    {% for image in post.images.all %}
+                    <img src="{{ image.image.url }}" style="min-width: 100%; object-fit: cover;">
+                    {% endfor %}
+                {% elif post.image %}
+                    <img src="{{ post.image.url }}" style="min-width: 100%; object-fit: cover;">
+                {% endif %}
+            </div>
+            {% if post.images.count > 1 %}
+            <button class="prev-btn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 24px;">‹</button>
+            <button class="next-btn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 24px;">›</button>
+            {% endif %}
+        </div>
+
+        <!-- 좋아요 & 댓글 아이콘 -->
+        <div class="post-actions" style="padding:10px; font-size:1.5rem;">
+            <i class="fa-regular fa-heart like-btn" style="cursor:pointer; margin-right:10px;"></i>
+            <i class="fa-regular fa-comment" style="cursor:pointer;"></i>
+        </div>
+
+        <!-- 좋아요 개수 -->
+        <div style="padding:0 10px; font-weight:bold; font-size:0.9rem;">
+            좋아요 <span class="like-count">{{ post.likes.count }}</span>개
+        </div>
+
+        <!-- 게시글 내용 -->
+        <div style="padding:0 10px;">
+            <strong>{{ post.user.username }}</strong> {{ post.content }}
+        </div>
+
+        <!-- 댓글 리스트 -->
+        <div class="post-comments" style="padding:0 10px; font-size:0.9rem; margin-top:5px;">
+            {% for comment in post.comments.all %}
+            <div class="comment" data-comment-id="{{ comment.id }}">
+                <strong>{{ comment.user.username }}</strong> {{ comment.content }}
+                {% if comment.user == request.user %}
+                <button class="delete-comment-btn" data-comment-id="{{ comment.id }}" style="background:none; border:none; color:#ed4956;">❌</button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 댓글 작성 -->
+        <form class="add-comment-form" style="display:flex; padding:10px; border-top:1px solid #dbdbdb;">
+            {% csrf_token %}
+            <input type="text" name="content" placeholder="댓글 달기..." required style="flex:1; border:none;">
+            <button type="submit" style="border:none; background:none; color:#3897f0; font-weight:bold;">게시</button>
+        </form>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+<script>
+document.querySelectorAll('.post').forEach(post => {
+    const track = post.querySelector('.slider-track');
+    const images = post.querySelectorAll('.slider-track img');
+    const prevBtn = post.querySelector('.prev-btn');
+    const nextBtn = post.querySelector('.next-btn');
+
+    if (!track || images.length <= 1) return; // 이미지 1개 이하면 skip
+
+    let currentIndex = 0;
+
+    const updateSlider = () => {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    };
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateSlider();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlider();
+    });
+});
+</script>
